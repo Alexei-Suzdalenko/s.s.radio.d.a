@@ -1,24 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="radio.drugaya.astrajan">
-
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="radio.drugaya.astrajan">
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <application
+        android:name=".all_util.App"
+        android:description="@string/app_name"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Radiodrugayaastrajan">
-        <activity
+        <activity android:screenOrientation="fullSensor"
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service android:name=".all_util.ServRadio" android:foregroundServiceType="location"  android:enabled="true" />
+        <receiver android:name=".assets.OffRadioReceiver" android:process=":remote" />
+        <receiver android:name=".assets.AutoStart"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <service android:name=".all_util.SleepService" android:enabled="true" android:foregroundServiceType="location" />
+
     </application>
 
 </manifest>
